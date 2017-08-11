@@ -3,13 +3,13 @@ version: '2'
 services:
     apache:
         container_name: prestashop
-        build: .
+        build: build/
         environment:
-            PS_DOMAIN: localhost
-            DUMP_PHP_FILES: prestashop-dataset
-            DUMP_SQL_FILE: prestashop-dataset.sql
+            PS_DOMAIN: localhost:8081
+            DUMP_SQL_FILE: /tmp/dump.sql
+            PS_INSTALL_AUTO: 0
         ports:
-            - "80:80"
+            - "8081:80"
         volumes:
-            - ./prestashop-dataset/:/var/www/html/prestashop-dataset
+            - ./bdd.sql:/tmp/dump.sql
         restart: always
