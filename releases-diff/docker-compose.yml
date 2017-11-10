@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+    mysql:
+        image: mysql
+        ports:
+            - "3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: prestashop
+    blackfire:
+      image: blackfire/blackfire
+      environment:
+            BLACKFIRE_SERVER_ID
+            BLACKFIRE_SERVER_TOKEN
+    reference-release:
+        build:
+            context: build-add-blackfire
+            args:
+                psversion: 1.7.2.4
+        environment:
+            DB_SERVER: mysql
+            DB_PASSWD: root
+            DB_NAME: prestashop-reference
+            PS_DOMAIN: localhost:8001
+            PS_INSTALL_AUTO: 1
+            PS_ERASE_DB: 1
+            PS_FOLDER_ADMIN: admin-dev
+            PS_FOLDER_INSTALL: install-dev
+            BLACKFIRE_CLIENT_ID
+            BLACKFIRE_CLIENT_TOKEN
+        depends_on:
+        depends_on:
+            - mysql
+        ports:
+            - "8001:80"
+    test-release:
+      build: test
+      environment:
+          DB_SERVER: mysql
+          DB_PASSWD: root
+          DB_NAME: prestashop-test
+          PS_DOMAIN: localhost:8002
+          PS_INSTALL_AUTO: 1
+          PS_ERASE_DB: 1
+          PS_FOLDER_ADMIN: admin-dev
+          PS_FOLDER_INSTALL: install-dev
+          BLACKFIRE_CLIENT_ID
+          BLACKFIRE_CLIENT_TOKEN
+      depends_on:
+          - mysql
+      ports:
+          - "8002:80"
