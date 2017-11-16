@@ -1,4 +1,3 @@
-
 ARG psversion
 FROM prestashop/prestashop:$psversion
 

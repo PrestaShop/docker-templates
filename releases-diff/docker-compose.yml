@@ -36,6 +36,8 @@ services:
             - "8001:80"
     test-release:
       build: test
+      args:
+          psversion: 1.7.2.4
       environment:
           DB_SERVER: mysql
           DB_PASSWD: root
