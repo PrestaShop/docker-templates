@@ -6,10 +6,8 @@ services:
         build: build/
         environment:
             PS_DOMAIN: localhost:8081
-            DUMP_SQL_FILE: /tmp/dump.sql
             PS_INSTALL_AUTO: 0
         ports:
             - "8081:80"
         volumes:
-            - ./bdd.sql:/tmp/dump.sql
-        restart: always
+            - ./bdd:/tmp/bdd
