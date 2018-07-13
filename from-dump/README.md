@@ -13,7 +13,7 @@ Run the following command:
 docker-compose up
 ```
 
-A pre-installed PrestaShop will be downloaded from Docker hub, and the dump available in `bdd.sql` will restored in the MySQL database.
+A pre-installed PrestaShop will be downloaded from Docker hub, and the SQL files available in `bdd` folder will restored in the MySQL database.
 Once ready, your shop can be reached at the address http://localhost:8081 (default conf).
 
 In case of blank page, check the logs displayed on your terminal. The common fixes are:
