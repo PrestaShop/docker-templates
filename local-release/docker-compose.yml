@@ -1,0 +1,29 @@
+version: '2'
+
+volumes:
+    db-data:
+
+services:
+    mysql:
+        image: mysql:5.7
+        ports:
+            - "3306"
+        volumes:
+            - db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: prestashop
+    apache:
+        image: prestashop/base:7.1-apache
+        environment:
+            PS_INSTALL_AUTO: 1
+            DB_PASSWD: password
+            DB_NAME: prestashop
+            DB_SERVER: mysql
+            PS_DOMAIN: localhost:8001
+            PS_FOLDER_INSTALL: install-dev
+            PS_FOLDER_ADMIN: admin-dev
+        ports:
+            - "8001:80"
+        volumes:
+            - <PATH TO PRESTASHOP>:/var/www/html
