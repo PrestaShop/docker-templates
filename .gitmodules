@@ -1,0 +1,3 @@
+[submodule "autoupgrade-test/autoupgrade"]
+	path = autoupgrade-test/autoupgrade
+	url = https://github.com/PrestaShop/autoupgrade.git
