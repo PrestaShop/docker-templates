@@ -1,0 +1,44 @@
+version: '3'
+services:
+    mysql:
+        image: mysql:5.7
+        ports:
+            - "3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./config-files/mysql/conf.d/:/etc/mysql/conf.d
+        environment:
+            MYSQL_ROOT_PASSWORD: MyEpicPassword
+            MYSQL_DATABASE: prestashop
+        restart: always
+    prestashop:
+        image: prestashop/prestashop:1.7-7.2-fpm
+        expose:
+            - "9000"
+        depends_on:
+            - mysql
+        volumes:
+            - ./www/:/var/www/html/
+            - ./config-files/php/php.ini:/usr/local/etc/php/php.ini
+        restart: always
+        environment:
+          - DB_PASSWD=MyEpicPassword
+          - DB_NAME=prestashop
+          - PS_INSTALL_AUTO=1
+          - DB_SERVER=mysql 
+          - PS_DOMAIN=localhost:8002
+    apache:
+        image: "httpd:2.4.43-alpine"
+        ports:
+            - "8002:80"
+            - "443"
+        depends_on:
+            - prestashop
+        volumes:
+            - ./www/:/var/www/html/
+            - ./logs/apache2/:/var/log/apache2/
+            - ./config-files/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+        restart: always
+
+volumes:
+    dbdata:
