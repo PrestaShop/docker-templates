@@ -33,6 +33,16 @@ Once ready, your shop can be reached at the address http://localhost:8081 (defau
 
 xDebug is configured to display full stack-traces and allow debuggers to listen on port 9007.
 
+## Customization options
+
+Default versions for PrestaShop and Mysql are provided in the `.env` file. To customize these values, additional environment files can be created and provided in the start command.
+
+```bash
+docker compose --env-file .env --env-file .env.override up
+```
+
+
+
 ## Notes
 
 ### Permission on upgrade module
