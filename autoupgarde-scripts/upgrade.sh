@@ -159,3 +159,19 @@ fi
 
 docker compose up -d prestashop-run
 echo "--- Docker container created for upgrade, see result at http://localhost:8002/admin ---"
+
+
+FRONT_CONTAINER_NAME="visualize-diff-front"
+BACK_CONTAINER_NAME="visualize-diff-back"
+
+if ! docker ps -f name=${BACK_CONTAINER_NAME} | grep -q ${BACK_CONTAINER_NAME}; then
+    echo "Launching ${BACK_CONTAINER_NAME}"
+    docker compose up -d ${BACK_CONTAINER_NAME}
+fi
+
+if ! docker ps -f name=${FRONT_CONTAINER_NAME} | grep -q ${FRONT_CONTAINER_NAME}; then
+    echo "Launching ${FRONT_CONTAINER_NAME}"
+    docker compose up -d ${FRONT_CONTAINER_NAME}
+fi
+
+echo "--- If you want to check diff, see diff tool at http://localhost:8080/ ---"

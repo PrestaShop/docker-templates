@@ -1,0 +1,14 @@
+body {
+    padding: 2rem;
+}
+
+h1.puik-h1 {
+    margin-bottom: 2rem;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 1rem;
+}

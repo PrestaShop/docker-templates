@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diff HTML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.0.0-rc.1/diff2html.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.0.0-rc.1/diff2html.min.js"></script>
+</head>
+<body>
+<div id="diff"></div>
+<script>
+    var diffOutput = `diff --git a/8.0.5_upgraded_dump_.sql b/8.1.5_dump_.sql
+index 79c2b2c..c4591a6 100644
+--- a/8.0.5_upgraded_dump_.sql
++++ b/8.1.5_dump_.sql
+@@ -1,6 +1,6 @@
+ -- MySQL dump 10.13  Distrib 5.7.44, for Linux (x86_64)
+ --
+--- Host: mysql    Database: presta_805
++-- Host: mysql    Database: presta_815
+ -- ------------------------------------------------------
+ -- Server version\t5.7.44
+
+@@ -300,7 +300,7 @@ CREATE TABLE \`ps_authorization_role\` (
+   \`slug\` varchar(191) NOT NULL,
+   PRIMARY KEY (\`id_authorization_role\`),
+   UNIQUE KEY \`slug\` (\`slug\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=461 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=465 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -949,7 +949,7 @@ CREATE TABLE \`ps_configuration\` (
+   KEY \`name\` (\`name\`),
+   KEY \`id_shop\` (\`id_shop\`),
+   KEY \`id_shop_group\` (\`id_shop_group\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=306 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=304 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -1593,7 +1593,7 @@ DROP TABLE IF EXISTS \`ps_feature_flag\`;
+ CREATE TABLE \`ps_feature_flag\` (
+   \`id_feature_flag\` int(10) unsigned NOT NULL AUTO_INCREMENT,
+   \`name\` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+-  \`state\` tinyint(1) DEFAULT '0',
++  \`state\` tinyint(1) NOT NULL DEFAULT '0',
+   \`label_wording\` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+   \`label_domain\` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+   \`description_wording\` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+@@ -1601,7 +1601,7 @@ CREATE TABLE \`ps_feature_flag\` (
+   \`stability\` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'beta',
+   PRIMARY KEY (\`id_feature_flag\`),
+   UNIQUE KEY \`UNIQ_91700F175E237E06\` (\`name\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
++) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -1825,7 +1825,7 @@ CREATE TABLE \`ps_hook\` (
+   \`position\` tinyint(1) NOT NULL DEFAULT '1',
+   PRIMARY KEY (\`id_hook\`),
+   UNIQUE KEY \`hook_name\` (\`name\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=852 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=895 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -1841,7 +1841,7 @@ CREATE TABLE \`ps_hook_alias\` (
+   \`name\` varchar(191) NOT NULL,
+   PRIMARY KEY (\`id_hook_alias\`),
+   UNIQUE KEY \`alias\` (\`alias\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -2032,7 +2032,7 @@ CREATE TABLE \`ps_log\` (
+   \`date_add\` datetime NOT NULL,
+   \`date_upd\` datetime NOT NULL,
+   PRIMARY KEY (\`id_log\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -3087,10 +3087,10 @@ DROP TABLE IF EXISTS \`ps_product_attribute_lang\`;
+ CREATE TABLE \`ps_product_attribute_lang\` (
+   \`id_product_attribute\` int(10) unsigned NOT NULL,
+   \`id_lang\` int(10) unsigned NOT NULL,
+-  \`available_now\` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+-  \`available_later\` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
++  \`available_now\` varchar(255) DEFAULT NULL,
++  \`available_later\` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (\`id_product_attribute\`,\`id_lang\`)
+-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
++) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -4165,7 +4165,7 @@ CREATE TABLE \`ps_tab\` (
+   \`wording\` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   \`wording_domain\` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (\`id_tab\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
++) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -4336,7 +4336,7 @@ CREATE TABLE \`ps_timezone\` (
+   \`id_timezone\` int(10) unsigned NOT NULL AUTO_INCREMENT,
+   \`name\` varchar(32) NOT NULL,
+   PRIMARY KEY (\`id_timezone\`)
+-) ENGINE=InnoDB AUTO_INCREMENT=561 DEFAULT CHARSET=utf8mb4;
++) ENGINE=InnoDB AUTO_INCREMENT=560 DEFAULT CHARSET=utf8mb4;
+ /*!40101 SET character_set_client = @saved_cs_client */;
+
+ --
+@@ -4537,4 +4537,4 @@ CREATE TABLE \`ps_zone_shop\` (
+ /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+--- Dump completed on 2024-04-10 14:14:10
++-- Dump completed on 2024-04-10 14:14:33
+`;
+    var diff2htmlUi = new Diff2HtmlUI({diff: diffOutput});
+    diff2htmlUi.draw('#diff', {inputFormat: 'diff', showFiles: true, matching: 'lines', outputFormat: 'side-by-side'});
+</script>
+</body>
+</html>
