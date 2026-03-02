@@ -1,20 +1,30 @@
+volumes:
+  db-data:
+  shop-files:
+
 services:
     mysql:
         image: mysql:${MYSQL_TAG}
         ports:
             - "3306"
+        volumes:
+            - db-data:/var/lib/mysql
+            - ./build/custom_db_config.cnf:/etc/mysql/conf.d/custom_db_config.cnf
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: psreference
     shop:
         image: prestashop/prestashop:${PS_TAG}
         volumes:
-            - ./autoupgrade:/var/www/html/modules/autoupgrade
-            # Comment the next two lines if you don't need xDebug
+            - ${PATH_TO_UPGRADE_FOLDER}:/var/www/html/modules/autoupgrade
+            - ./build/docker-opcache.ini:/usr/local/etc/php/conf.d/docker-opcache.ini
+            # Comment the next lines if you don't need xDebug
             - ./build/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-            - ./build/init-xdebug.sh:/tmp/init-scripts/init-xdebug.sh
+            #- ./build/init-xdebug.sh:/tmp/init-scripts/init-xdebug.sh
+            - ./build/init-xdebug-3.1.sh:/tmp/init-scripts/init-xdebug.sh
             # Uncomment if you need access to the shop files
             # - ./shopContents:/var/www/html
+            - shop-files:/var/www/html
         environment:
             DB_SERVER: mysql
             DB_PASSWD: root
@@ -26,9 +36,10 @@ services:
             PS_FOLDER_ADMIN: admin-dev
             PS_FOLDER_INSTALL: install-dev
             PS_DEV_MODE: 1
+            DB_PREFIX: ks_
             PS_LANGUAGE: fr
+            PS_URL_TRACKING: 0
         depends_on:
             - mysql
         ports:
             - "8001:80"
-            - "9007:9007"
