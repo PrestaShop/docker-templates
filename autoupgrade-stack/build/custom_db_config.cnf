@@ -1,0 +1,7 @@
+[mariadb]
+
+# Add your custom SQL configuration below
+
+#wait_timeout=5
+#interactive_timeout=5
+
